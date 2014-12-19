@@ -60,17 +60,33 @@
               {commentNodes}
             </div>
           );
-          
+
         }
       });
 
       /* This is our Comment Form component*/
       var CommentForm = React.createClass({
+
+        /* Submit Handler */
+        handleSubmit: function(e){
+          e.preventDefault();
+          var author = this.refs.author.getDOMNode().value;
+          var text = this.refs.text.getDOMNode().value;
+          if(!author || !text){
+            return;
+          }
+          this.refs.author.getDOMNode().value = "";
+          this.refs.text.getDOMNode().value = "";
+          return;
+        },
+
         render: function() {
           return (
-            <div className="commentForm">
-              Hello, I am a Comment Form
-            </div>
+            <form className="commentForm" onSubmit={this.handleSubmit}>
+              <input type="text" placeholder="Your name" ref="author"/>
+              <input type="text" placeholder="Say something..." ref="text"/>
+              <input type="submit" value="Post!"/>
+            </form>
           );
         }
       });
