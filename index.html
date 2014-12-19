@@ -33,12 +33,18 @@
           };
         },
 
+        /* Adding the new comment to the static data */
+        commentSubmitHandler: function(comment){
+          var updatedData = this.state.data.concat([comment]);
+          this.setState({data: updatedData});
+        },
+
         render: function() {
           return (
             <div className="commentBox">
               <h1>Comments</h1>
               <CommentList data={this.state.data}/>
-              <CommentForm />
+              <CommentForm onCommentSubmitted={this.commentSubmitHandler}/>
             </div>
           );
         }
@@ -75,6 +81,7 @@
           if(!author || !text){
             return;
           }
+          this.props.onCommentSubmitted({author: author, text: text});
           this.refs.author.getDOMNode().value = "";
           this.refs.text.getDOMNode().value = "";
           return;
